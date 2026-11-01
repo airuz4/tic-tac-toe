@@ -1,0 +1,23 @@
+body{
+   display: flex; 
+   justify-content: center;
+   align-items: center;
+   height: 100vh;
+}
+
+#game-setup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.5rem;
+    border: 1px solid black;
+    max-width: 300px; /* Optional: bounds form width */
+}
+
+/* Optional: Stack labels above inputs inside input-groups */
+
+.gameboard{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+}

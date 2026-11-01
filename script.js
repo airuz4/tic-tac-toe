@@ -22,7 +22,7 @@ function Gameboard(){
 
 
 
-    const WINNING_COMBOS = [
+    const win_cond = [
     [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
     [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
     [0, 4, 8], [2, 4, 6]             // Diagonals
@@ -30,7 +30,7 @@ function Gameboard(){
 
 
   const checkWin = () => {
-    for (let combo of WINNING_COMBOS){
+    for (let combo of win_cond){
         const [a, b, c] = combo;
         if (board[a] !== "0" && board[a] === board[b] && board[a] === board[c]){
             return board[a];
@@ -122,6 +122,55 @@ function GameController(
 }
 
 
-
-
 const NBA = GameController('Lebron', 'Luka');
+
+
+//UI LOGIC
+
+// Find the div by its ID
+const gameDialog = document.querySelector("dialog")
+const gameForm = document.querySelector("#game-setup-form")
+
+gameForm.addEventListener("submit", (e) =>{
+    e.preventDefault();
+    const player1 = document.getElementById("player1").value;
+    const player2 = document.getElementById("player2").value;
+    gameDialog.show();
+    uiControl(player1, player2);
+    gameForm.remove();
+})
+
+
+function uiControl(player1, player2) {
+    const game = GameController(player1, player2);
+    const boardDiv = document.querySelector(".gameboard")
+    const playerDiv = document.querySelector(".playerStatus")
+
+    const updateScreen = () => {
+        boardDiv.textContent = "";
+        const board = game.getBoard();
+        const activePlayer = game.getActivePlayer();
+        playerDiv.textContent = `${activePlayer.name}'s turn...`;
+
+        board.forEach((box, index) => {
+        // Anything clickable should be a button!!
+        const boxButton = document.createElement("button");
+        boxButton.classList.add("box");
+        // Create a data attribute to identify the column
+        // This makes it easier to pass into our `playRound` function
+        boxButton.dataset.box = index;
+        boxButton.textContent = box === "0" ? "asd" : box;
+        boardDiv.appendChild(boxButton);
+      });
+    }
+
+     
+    function clickHandler(e){
+        const selectedBox = e.target.dataset.box
+        if (selectedBox === undefined) return;
+        game.playRound(selectedBox)
+        updateScreen();
+    }
+    boardDiv.addEventListener("click", clickHandler);
+    updateScreen();
+}

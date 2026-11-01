@@ -8,7 +8,29 @@
 </head>
 <body>
     
+    <div id="start-game">
+        <form action="" id="game-setup-form">
+            <div class="input-group">
+                <label for="player1">Player 1</label>
+                <input type="text" id="player1" name="player1" required>
+            </div>
+            <div class="input-group">
+                <label for="player2">Player 2</label>
+                <input type="text" id="player2" name="player2" required>
+            </div>
 
+            <button type="submit" id="startBtn">Start Game!</button>
+        </form>
+    </div>
+
+    <dialog>
+        <div id="tic-tac-toe">
+            <div class="gameboard">
+                <div class="playerStatus">
+                </div>
+            </div>
+        </div>
+    </dialog>
     <script src="script.js"></script>
 </body>
 </html>
